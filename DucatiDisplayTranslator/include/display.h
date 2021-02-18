@@ -23,9 +23,12 @@ void DisplaySymbolFuel(byte visible);
 void DisplaySymbolTot(byte visible);
 void DisplaySymbolRev(byte visible);
 void DisplaySymbolTemp(byte visible);
+void DisplaySymbolClutch(byte visible);
 void DisplayAllSymbolsOff();
 void DisplaySendSpeed();
 void DisplaySendOdo();
+void DisplaySendTps(int tps);
+void DisplaySendGear(int gear);
 void DisplaySendRev(int rev);
 void DisplaySendTemp(int temp);
 

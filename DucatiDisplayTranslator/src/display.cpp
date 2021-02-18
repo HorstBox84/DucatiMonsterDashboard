@@ -100,6 +100,12 @@ void DisplaySymbolRev(byte visible) {
   DisplayTerminateMsg();
 }
 
+void DisplaySymbolClutch(byte visible) {
+  Serial.print("vis clutch,");
+  Serial.print(visible);
+  DisplayTerminateMsg();
+}
+
 void DisplaySymbolTemp(byte visible) {
   Serial.print("vis temp,");
   Serial.print(visible);
@@ -118,8 +124,30 @@ void DisplayAllSymbolsOff() {
   DisplaySymbolTrip(0);
   DisplaySymbolFuel(0);
   DisplaySymbolTot(0);
+  DisplaySymbolClutch(0);
+  DisplaySymbolTemp(0);
   DisplaySymbolPM(0);
   DisplaySymbolAM(0);
+}
+
+void DisplaySendGear(int gear) {
+  Serial.print("textgear.txt=\"");
+  if (gear > 0) {
+    Serial.print(gear);
+  }
+  else {
+    Serial.print("N");
+  }
+  Serial.print("\"");
+  DisplayTerminateMsg();
+}
+
+void DisplaySendTps(int tps) {
+  Serial.print("texttps.txt=\"");
+  Serial.print(tps);
+  Serial.print("\%");
+  Serial.print("\"");
+  DisplayTerminateMsg();
 }
 
 void DisplaySendSpeed() {

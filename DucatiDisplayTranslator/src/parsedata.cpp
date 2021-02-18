@@ -238,7 +238,7 @@ void parseTextOdo() {
       textodo[4] = ':';
     }
     else if (OdoDegree) {
-      textodo[4] = '\'';
+      textodo[4] = '\°';
     }
     else {
       textodo[4] = ' ';
