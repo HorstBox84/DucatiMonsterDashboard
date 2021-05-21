@@ -9,4 +9,5 @@ Proof of concept video is here: [YouTube](https://youtu.be/okvaCjY8tiw)
 
 
 ~~Todo: Create a CAD model to fit the new display onto the old dashboard.~~
+
 First (kind of) working CAD model can be found in the mechanical folder.
