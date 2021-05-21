@@ -106,6 +106,12 @@ void DisplaySymbolClutch(byte visible) {
   DisplayTerminateMsg();
 }
 
+void DisplaySymbolStand(byte visible) {
+  Serial.print("vis stand,");
+  Serial.print(visible);
+  DisplayTerminateMsg();
+}
+
 void DisplaySymbolTemp(byte visible) {
   Serial.print("vis temp,");
   Serial.print(visible);
@@ -142,6 +148,14 @@ void DisplaySendGear(int gear) {
   DisplayTerminateMsg();
 }
 
+void DisplaySendTempText(int temp) {
+  Serial.print("texttemp.txt=\"");
+  Serial.print(temp);
+  Serial.print("\°C");
+  Serial.print("\"");
+  DisplayTerminateMsg();
+}
+
 void DisplaySendTps(int tps) {
   Serial.print("texttps.txt=\"");
   Serial.print(tps);
@@ -153,9 +167,13 @@ void DisplaySendTps(int tps) {
 void DisplaySendSpeed() {
   Serial.print("textspeed.txt=\"");
   Serial.print(textspeed[0]);
-  Serial.print(textspeed[1]);
+  if (textspeed[1] != ' ') {
+    Serial.print(textspeed[1]);
+  }
   Serial.print(textspeed[2]);
-  Serial.print(textspeed[3]);
+  if (textspeed[3] != ' ') {
+    Serial.print(textspeed[3]);
+  }
   Serial.print(textspeed[4]);
   Serial.print("\"");
   DisplayTerminateMsg();
@@ -164,12 +182,18 @@ void DisplaySendSpeed() {
 void DisplaySendOdo() {
   Serial.print("textodo.txt=\"");
   Serial.print(textodo[0]);
-  Serial.print(textodo[1]);
+  if (textodo[1] != ' ') {
+    Serial.print(textodo[1]);
+  }
   Serial.print(textodo[2]);
   Serial.print(textodo[3]);
-  Serial.print(textodo[4]);
+  if (textodo[4] != ' ') {
+    Serial.print(textodo[4]);
+  }
   Serial.print(textodo[5]);
-  Serial.print(textodo[6]);
+  if (textodo[6] != ' ') {
+    Serial.print(textodo[6]);
+  }
   Serial.print(textodo[7]);
   Serial.print("\"");
   DisplayTerminateMsg();

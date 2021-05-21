@@ -18,14 +18,21 @@ uint8_t CanArray[CAN_PACKETSIZE] = {0};
 
 //display
 long rev = 0;
+long revBak = 0;
 int tps = 0;
+int tpsBak = 0;
 int clutch = 0;
+int clutchBak = 0;
 int temp = 0;
+int tempBak = 0;
 int gear = 0;
-int speed = 0;
-long dist = 0;
+int gearBak = 0;
+//int speed = 0;
+//long dist = 0;
 char textspeed[5] = {' ',' ',' ',' ',' '};
+char textspeedBak[5] = {' ',' ',' ',' ',' '};
 char textodo[8] = {' ',' ',' ',' ',' ',' ',' ',' '};
+char textodoBak[8] = {' ',' ',' ',' ',' ',' ',' ',' '};
 
 //I2C
 #define SDA_PIN 4
@@ -53,18 +60,19 @@ void onCanReceive(int packetSize) {
     case MSG_ID_TPS:
     tps = CanArray[0] >> 1;
     clutch = CanArray[0] & 0x01;
-    DisplaySendTps(tps);
-    DisplaySymbolClutch(clutch);
+    newData ++;
     break;
 
     case MSG_ID_SPEED:
     gear = (CanArray[0] >> 4) & 0x0F;
     rev = (CanArray[3] << 8) | CanArray[4];
-    DisplaySendGear(gear);
+    SymbolStand = (CanArray[5] >> 1) & 0x01;
+    newData ++;
     break;
 
     case MSG_ID_TEMP:
-    temp = CanArray[0] - 40;
+    TempText = CanArray[0] - 40;
+    newData ++;
     break;
 
     default:
@@ -111,17 +119,17 @@ void setup() {
   Wire.begin(IIC_ADRESS);
   Wire.onReceive(onIicReceive); //register receive handler
 
-  Serial.println("CAN: Receiver");
+  //Serial.println("CAN: Receiver");
 
   // start the CAN bus at 500 kbps
   if (!CAN.begin(500E3)) {
-    Serial.println("CAN: Starting failed!");
+    //Serial.println("CAN: Starting failed!");
     while (1);
   }
 
   // register the receive callback
   CAN.onReceive(onCanReceive);
-  Serial.println("CAN: receive callback registered");
+  //Serial.println("CAN: receive callback registered");
 }
 
 void loop() {
@@ -139,27 +147,117 @@ void loop() {
     parseTextSpeed();
 
     // send data to display
-    DisplaySendTemp(TempBars * 14);
-    DisplaySendRev(RevBars * 2);
-
-    DisplaySymbolTemp(TempSymbol);
-    DisplaySymbolRev(RevSymbol);
-    
     DisplaySendOdo();
     DisplaySendSpeed();
-    DisplaySymbolDda(SymbolDDA);
-    DisplaySymbolDtc(SymbolDTC);
-    DisplaySymbolError(SymbolError);
-    DisplaySymbolFuel(SymbolFuel);
-    DisplaySymbolKmh(SymbolKmh);
-    DisplaySymbolLap(SymbolLap);
-    DisplaySymbolMph(SymbolMph);
-    DisplaySymbolTair(SymbolTAir);
-    DisplaySymbolTot(SymbolTot);
-    DisplaySymbolTrip(SymbolTrip);
-    DisplaySymbolWrench(SymbolWrench);
-    DisplaySymbolPM(SymbolPM);
-    DisplaySymbolAM(SymbolAM);
-  
+
+    if (TempBars != TempBarsBak) {
+      DisplaySendTemp(TempBars * 14);
+      TempBarsBak = TempBars;
+    }
+
+    if (RevBars != RevBarsBak) {
+      DisplaySendRev(RevBars * 2);
+      RevBarsBak = RevBars;
+    }
+
+    if (TempSymbol != TempSymbolBak) {
+      DisplaySymbolTemp(TempSymbol);
+      TempSymbolBak = TempSymbol;
+    }
+
+    if (RevSymbol != RevSymbolBak) {
+      DisplaySymbolRev(RevSymbol);
+      RevSymbolBak = RevSymbol;
+    }
+    
+    if (SymbolDDA != SymbolDDABak) {
+      DisplaySymbolDda(SymbolDDA);
+      SymbolDDABak = SymbolDDA;
+    }
+    
+    if (SymbolDTC != SymbolDTCBak) {
+      DisplaySymbolDtc(SymbolDTC);
+      SymbolDTCBak = SymbolDTC;
+    }
+
+    if (SymbolError != SymbolErrorBak) {
+      DisplaySymbolError(SymbolError);
+      SymbolErrorBak = SymbolError;
+    }    
+    
+    if (SymbolFuel != SymbolFuelBak) {
+      DisplaySymbolFuel(SymbolFuel);
+      SymbolFuelBak = SymbolFuel;
+    }
+    
+    if (SymbolKmh != SymbolKmhBak) {
+      DisplaySymbolKmh(SymbolKmh);
+      SymbolKmhBak = SymbolKmh;
+    }
+    
+    if (SymbolLap != SymbolLapBak) {
+      DisplaySymbolLap(SymbolLap);
+      SymbolLapBak = SymbolLap;
+    }
+    
+    if (SymbolMph != SymbolMphBak) {
+      DisplaySymbolMph(SymbolMph);
+      SymbolMphBak = SymbolMph;
+    }
+
+    if (SymbolTAir != SymbolTAirBak) {
+      DisplaySymbolTair(SymbolTAir);
+      SymbolTAirBak = SymbolTAir;
+    }   
+    
+    if (SymbolTot != SymbolTotBak) {
+      DisplaySymbolTot(SymbolTot);
+      SymbolTotBak = SymbolTot;
+    }
+    
+    if (SymbolTrip != SymbolTripBak) {
+      DisplaySymbolTrip(SymbolTrip);
+      SymbolTripBak = SymbolTrip;
+    }
+
+    if (SymbolWrench != SymbolWrenchBak) {
+      DisplaySymbolWrench(SymbolWrench);
+      SymbolWrenchBak = SymbolWrench;
+    }    
+    
+    if (SymbolPM != SymbolPMBak) {
+      DisplaySymbolPM(SymbolPM);
+      SymbolPMBak = SymbolPM;  
+    }
+
+    if (SymbolAM != SymbolAMBak) {
+      DisplaySymbolAM(SymbolAM);
+      SymbolAMBak = SymbolAM;  
+    }    
+    
+    if (gear != gearBak) {
+      DisplaySendGear(gear);
+      gearBak = gear;
+    }
+    
+    if (tps != tpsBak) {
+      DisplaySendTps(tps);
+      tpsBak = tps;
+    }
+    
+    if (clutch != clutchBak) {
+      DisplaySymbolClutch(clutch);
+      clutchBak = clutch;
+    }
+    
+    if (SymbolStand != SymbolStandBak) {
+      DisplaySymbolStand(SymbolStand);
+      SymbolStandBak = SymbolStand;
+    }
+
+    if (TempText != TempTextBak) {
+      DisplaySendTempText(TempText);
+      TempTextBak = TempText;
+    }
   }
 }

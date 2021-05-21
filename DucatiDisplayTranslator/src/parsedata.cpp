@@ -85,7 +85,7 @@ void parseData() {
   OdoColon1 =     (IicArray[26] >> 7) & 0x01;
   OdoChar2 = (((IicArray[25] & 0xF7) << 8) | (IicArray[24] & 0x7F));
   OdoChar3 = (((IicArray[23] & 0xF7) << 8) | (IicArray[22] & 0x7F));
-  OdoColon1 =     (IicArray[22] >> 7) & 0x01;
+  OdoColon2 =     (IicArray[22] >> 7) & 0x01;
   OdoChar4 = (((IicArray[21] & 0xF7) << 8) | (IicArray[20] & 0x7F));
   OdoDegree =     (IicArray[21] >> 3) & 0x01;
   OdoDP =         (IicArray[20] >> 7) & 0x01;
@@ -251,21 +251,6 @@ void parseTextOdo() {
       textodo[6] = ' ';
     }
     textodo [7] = parseChar(OdoChar5);
-
-    // shift right
-    int j = 6;
-    int k = 0;
-    while (j > 0) {
-      if (textodo[j] == ' '){
-        while (j - k > 0) {
-          textodo[j - k] = textodo[j - k - 1];
-          textodo[j - k - 1] = ' ';
-          k++;
-        }
-        k = 0;
-      }
-      j--;
-    }
 }
 
 void parseTextSpeed() {
@@ -284,19 +269,4 @@ void parseTextSpeed() {
       textspeed[3] = ' ';
     }
     textspeed [4] = parseChar(SpeedChar3);
-
-    // shift right
-    int j = 3;
-    int k = 0;
-    while (j > 0) {
-      if (textspeed[j] == ' '){
-        while (j - k > 0) {
-          textspeed[j - k] = textspeed[j - k - 1];
-          textspeed[j - k - 1] = ' ';
-          k++;
-        }
-        k = 0;
-      }
-      j--;
-    }
 }
