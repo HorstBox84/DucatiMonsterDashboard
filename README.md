@@ -7,6 +7,7 @@ Description of the I²C data bytes is here: [Ducati Monster 696_796_1100 IIC Dis
 
 Proof of concept video is here: [YouTube](https://youtu.be/okvaCjY8tiw)
 
+First run on biike with painted cover: [YouTube](https://www.youtube.com/watch?v=fX3ZTVyuj_4)
 
 ~~Todo: Create a CAD model to fit the new display onto the old dashboard.~~
 
